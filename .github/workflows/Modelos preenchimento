@@ -1,0 +1,41 @@
+setwd("F:\\Pesquisa_e_Desenvolvimento\\Clima & Ecofisiologia Vegetal\\Material de Estudo\\Agrometeorologia & Clima\\Evapotranspiração")
+
+d.inso <- read.csv(file = "Insolacao.csv", dec = ",", sep = ";", h = T)
+
+d.ppt <- read.csv(file = "PPT.csv", dec = ",", sep = ";", h = T)
+
+#Criando um modelo de Insolação para os dados faltantes de Fevereiro
+model <- lm(Ano~I(1/Lat)+I(1/Long)+I(Lat+Long)+I(1/d.ppt$Ano), data = d.inso)
+
+anova(model)
+
+summary(model)
+
+model1 <- lm(d.inso$Dezembro~I(1/d.inso$Long)+I(d.tmax$Dezembro^2)+I(d.inso$Long^2+d.tmax$Dezembro))
+  
+anova(model1)
+
+summary(model1)
+
+#Criando um modelo de Insolação para os dados faltantes de Novembro
+model <- lm(Novembro~I(1/Lat)+I(1/Long)+I(Lat*Long^2),data = dados)
+
+anova(model)
+
+summary(model)
+
+Tmax <- read.csv(file = "Tmax.csv", dec = ",", sep = ";", h = T)
+
+model.Tmax <- lm(Dezembro~I(Lat^2)+I(Alt^2),data = Tmax)
+
+anova(model.Tmax)
+
+summary(model.Tmax)
+
+Tmin <- read.csv(file = "Tmin.csv", dec = ",", sep = ";", h = T)
+
+model.Tmin <- lm(Fevereiro~I(Lat^2)+I(Alt^2),data = Tmin)
+
+anova(model.Tmin)
+
+summary(model.Tmin)
